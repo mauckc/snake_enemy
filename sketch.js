@@ -6,6 +6,7 @@ let w;
 let h;
 let spawntimer = 0;
 let fps = 20;
+let inputDelay = 0;
 
 function setup() {
   createCanvas(400, 400);
@@ -21,22 +22,23 @@ function foodLocation() {
   let x = floor(random(w));
   let y = floor(random(h));
   food = createVector(x, y);
-  
 }
 
 function keyPressed() {
-  if(keyCode === LEFT_ARROW) {
-    snake.setDir(-1, 0);
-  } else if (keyCode === RIGHT_ARROW) {
-  	snake.setDir(1, 0);
-  } else if (keyCode === DOWN_ARROW) {
-  	snake.setDir(0, 1);
-  } else if (keyCode === UP_ARROW) {
-  	snake.setDir(0, -1);
-  } else if (key == ' ') {
-  	snake.grow();
+  if(inputDelay == 0) {
+    inputDelay = 1;
+  	if(keyCode === LEFT_ARROW && snake.xdir != 1) {
+      snake.setDir(-1, 0);
+    } else if (keyCode === RIGHT_ARROW && snake.xdir != -1) {
+      snake.setDir(1, 0);
+    } else if (keyCode === DOWN_ARROW && snake.ydir != -1) {
+      snake.setDir(0, 1);
+    } else if (keyCode === UP_ARROW && snake.ydir != 1) {
+      snake.setDir(0, -1);
+    } else if (key == ' ') {
+      snake.grow();
+    }
   }
-
 }
 
 function sleep(milliseconds) {
@@ -58,6 +60,8 @@ function draw() {
   snake.show();
   enemy.update();
   enemy.show();
+  inputDelay = 0;
+  
 //   if (spawntimer % 20) {
   
 //   }
@@ -73,11 +77,11 @@ function draw() {
   	print("END GAME");
     sleep(500);
     //noLoop();
-    prompt(text, "Restart?")
-    if (keyCode == 'Restart?'){
-      background(220);
-      loop();
-    }
+    //prompt(text, "Restart?")
+    //if (keyCode == 'Restart?'){
+    	//background(220);
+  		//loop();
+    //}
   }
 
 }
