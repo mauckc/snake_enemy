@@ -6,6 +6,7 @@ class Snake {
     this.xdir = 0;
     this.ydir = 0;
     this.len = 0;
+    this.color = color(random(255),random(255),random(255));
   }
   
   setDir(x, y) {
@@ -33,7 +34,7 @@ class Snake {
     {
       head.x+=w
     }
-    if (head.y==-2)
+    if (head.y==-2) 
     {
       head.y+=h
     }
@@ -73,7 +74,7 @@ class Snake {
   eat(pos) {
   	let x = this.body[this.body.length-1].x;
     let y = this.body[this.body.length-1].y;
-    if(x == pos.x && y == pos.y) {
+    if((pos.x <= x && x < pos.x + foodxsize) && (pos.y <= y && y < pos.y + foodysize)) {
       this.grow();
       return true;
     }
@@ -82,9 +83,10 @@ class Snake {
   
   show() {
   	for(let i = 0; i < this.body.length; i++) {
-    	fill(0);
+    	fill(this.color);
       noStroke();
-      rect(this.body[i].x, this.body[i].y, 1, 1)
+      text("snake", this.body[0].x + 10 , this.body[0].y, 50, 50);
+      rect(this.body[i].x, this.body[i].y, 1, 1);
     }
   }
 
