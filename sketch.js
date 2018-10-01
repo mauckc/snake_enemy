@@ -35,8 +35,8 @@ function setup() {
   count = wideCount * highCount;
   // index for each enemy
   var index = 0;
-  for (var mu = 0; mu < 10; mu++){
-  	enemies[index++] = new Enemy();
+  for (var mu = 0; mu < 10; mu++) {
+    enemies[index++] = new Enemy();
   }
   //}
   //}
@@ -78,12 +78,12 @@ function draw() {
   //enemies[i].update();
   //enemies[i].show();
   //}
-  
+
   enemies.forEach(enemy => {
-    
     enemy.show();
+    enemy.move();
     enemy.update();
-	})
+  })
 
   inputDelay = 0;
 
@@ -113,40 +113,48 @@ function draw() {
 function Enemy() {
   this.x = floor(random(w));
   this.y = floor(random(h));
-  console.log(this.x)
-  console.log(this.y)
-  this.xspeed = 1;
-  this.yspeed = 1;
+  this.speed = 1;
   this.color = 0;
-  this.xDir = 1;
-  this.yDir = 1;
+  this.direction = 0;
+  this.chaseTimer = 0;
 }
-
-//The Problem was with the update function and the multiplication of the this.xspeed/yspeed. Removing it seemed to do the trick.
 
 // Custom method for updating the variables
 Enemy.prototype.update = function() {
-  // Update the x direction
-  this.x = this.x + this.xDir;
-  this.y = this.y + this.yDir;
-
   // Boundary Conditions
   // Check if snake has hit edge of unit boundaries
-  //if (this.x >= width || this.x <= 0) {
-    // Flip direction
-    //this.xDir *= -1;
-    // Update to move the point back
-    //this.x = this.x + (1 * this.xDir);
-    //this.y = this.y + (1 * this.yDir);
-  //}
+  if (this.x > w || this.x < 0) {
+    if(this.direction == 1) {this.direction = 2; this.move();}
+    else{this.direction = 1; this.move();}
+  }
   // Check if Enemy has hit the y boundary of the unit
-  //if (this.y >= height || this.y <= 0) {
-    // Flip the direction
-    //this.yDir *= -1;
-    // Update to move the point back
-    //this.y = this.y + (1 * this.yDir);
-  //}
-
+  if (this.y > h || this.y < 0) {    
+    if(this.direction == 3) {this.direction = 4; this.move();}
+    else{this.direction = 3; this.move();}
+  }
+  // Update the x direction
+  //this.x = this.x + this.xDir;
+  //this.y = this.y + this.yDir;
+  if (this.chaseTimer > 60) {
+    this.chaseTimer = floor(random(-30, 30));
+    this.xDiff = this.x - snake.body[0].x;
+    this.yDiff = this.y - snake.body[0].y;
+    if (abs(this.xDiff) > abs(this.yDiff)) {
+      if (this.xDiff >= 0) {
+        this.direction = 1;
+      } else {
+        this.direction = 2;
+      }
+    } else {
+      if (this.yDiff >= 0) {
+        this.direction = 3;
+      } else {
+        this.direction = 4;
+      }
+    }
+  } else {
+    this.chaseTimer++;
+  }
 }
 
 // Module.prototype.update = function() {
@@ -170,5 +178,16 @@ Enemy.prototype.show = function() {
   rect(this.x, this.y, 2, 2);
   //var somey = this.y
   //console.log(somey)
-  
+}
+
+Enemy.prototype.move = function() {
+  if (this.direction == 1) {
+    this.x = this.x - this.speed;
+  } else if (this.direction == 2) {
+    this.x = this.x + this.speed;
+  } else if (this.direction == 3) {
+    this.y = this.y - this.speed;
+  } else {
+    this.y = this.y + this.speed;
+  }
 }
