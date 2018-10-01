@@ -35,12 +35,6 @@ function setup() {
   count = wideCount * highCount;
   // index for each enemy
   var index = 0;
-  // iterate over y units
-  //for (var y = 0; y < highCount; y++) {
-  // iterate over x units
-  //for (var x = 0; x < wideCount; x++) {
-  // Create each enemy
-  // enemies[index++] = new Enemy(x, y, random(1.0, 2.0), random(1.0,2.0), 255);
   for (var mu = 0; mu < 10; mu++){
   	enemies[index++] = new Enemy();
   }
@@ -80,10 +74,16 @@ function draw() {
   snake.update();
   snake.show();
 
-  for (var i = 0; i < 10; i++) {
-    enemies[i].update();
-    enemies[i].draw();
-  }
+  //for (var i = 0; i < 10; i++) {
+  //enemies[i].update();
+  //enemies[i].show();
+  //}
+  
+  enemies.forEach(enemy => {
+    
+    enemy.show();
+    enemy.update();
+	})
 
   inputDelay = 0;
 
@@ -111,38 +111,41 @@ function draw() {
 
 
 function Enemy() {
-  this.x = floor(random(1, w));
-  this.y = floor(random(1, h));
-  //console.log(this.x)
+  this.x = floor(random(w));
+  this.y = floor(random(h));
+  console.log(this.x)
+  console.log(this.y)
   this.xspeed = 1;
   this.yspeed = 1;
-  this.color = 255;
+  this.color = 0;
   this.xDir = 1;
   this.yDir = 1;
 }
 
+//The Problem was with the update function and the multiplication of the this.xspeed/yspeed. Removing it seemed to do the trick.
+
 // Custom method for updating the variables
 Enemy.prototype.update = function() {
   // Update the x direction
-  this.x = floor(this.x + (this.speed * this.xDir));
-  this.y = floor(this.y + (this.speed * this.yDir));
+  this.x = this.x + this.xDir;
+  this.y = this.y + this.yDir;
 
   // Boundary Conditions
   // Check if snake has hit edge of unit boundaries
-  if (this.x >= width || this.x <= 0) {
+  //if (this.x >= width || this.x <= 0) {
     // Flip direction
-    this.xDir *= -1;
+    //this.xDir *= -1;
     // Update to move the point back
-    this.x = this.x + (1 * this.xDir);
-    this.y = this.y + (1 * this.yDir);
-  }
+    //this.x = this.x + (1 * this.xDir);
+    //this.y = this.y + (1 * this.yDir);
+  //}
   // Check if Enemy has hit the y boundary of the unit
-  if (this.y >= height || this.y <= 0) {
+  //if (this.y >= height || this.y <= 0) {
     // Flip the direction
-    this.yDir *= -1;
+    //this.yDir *= -1;
     // Update to move the point back
-    this.y = this.y + (1 * this.yDir);
-  }
+    //this.y = this.y + (1 * this.yDir);
+  //}
 
 }
 
@@ -160,10 +163,12 @@ Enemy.prototype.update = function() {
 // }
 
 // Custom method for drawing the object
-Enemy.prototype.draw = function() {
-  fill(46);
-  text("enemy", this.x + 6, this.y + 6, 20, 20);
+Enemy.prototype.show = function() {
+  fill(50);
+  noStroke();
+  //text("enemy", this.x + 6, this.y + 6, 20, 20);
   rect(this.x, this.y, 2, 2);
   //var somey = this.y
   //console.log(somey)
+  
 }
