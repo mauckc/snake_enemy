@@ -7,6 +7,7 @@ class Snake {
     this.ydir = 0;
     this.len = 0;
     this.color = color(random(255),random(255),random(255));
+    this.hunger = 0;
   }
   
   setDir(x, y) {
@@ -14,7 +15,7 @@ class Snake {
     this.ydir = y;
   }
   
-  update() {
+  update() {    
   	let head = this.body[this.body.length-1].copy();
     this.body.shift();
     head.x += this.xdir;
@@ -72,20 +73,28 @@ class Snake {
   }
   
   eat(pos) {
+
   	let x = this.body[this.body.length-1].x;
     let y = this.body[this.body.length-1].y;
+    
     if((pos.x <= x && x < pos.x + foodxsize) && (pos.y <= y && y < pos.y + foodysize)) {
       this.grow();
+      this.hunger = 0;
       return true;
     }
+    // Snake gets hungrier everytime it tries to eat and fails
+    this.hunger++;
     return false;
   }
   
   show() {
+    noStroke();
+    fill(this.color);
+    // Make text shake with merlin noise with amplitude directly related
+    //  to the snake's hunger
+    text("snake", this.body[0].x , this.body[0].y, 12, 12);
+    text(this.hunger, this.body[0].x, this.body[0].y - 20, 12, 12);
   	for(let i = 0; i < this.body.length; i++) {
-    	fill(this.color);
-      noStroke();
-      text("snake", this.body[0].x + 10 , this.body[0].y, 50, 50);
       rect(this.body[i].x, this.body[i].y, 1, 1);
     }
   }
