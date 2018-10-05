@@ -6,7 +6,7 @@ class Snake {
     this.xdir = 0;
     this.ydir = 0;
     this.len = 0;
-    this.color = color(random(255),random(255),random(255));
+    this.color = color("#0e0eba");
     this.hunger = 0;
   }
   
@@ -23,19 +23,19 @@ class Snake {
     this.body.push(head);
     
     // Periodic Boundary Conditions
-    if (head.x==w)
+    if (head.x>=w)
     {
       head.x-=w
     }
-    if (head.y==h)
+    if (head.y>=h)
     {
       head.y-=h
     }
-     if (head.x==-2)
+     if (head.x<=-2)
     {
       head.x+=w
     }
-    if (head.y==-2) 
+    if (head.y<=-2) 
     {
       head.y+=h
     }
@@ -73,7 +73,6 @@ class Snake {
   }
   
   eat(pos) {
-
   	let x = this.body[this.body.length-1].x;
     let y = this.body[this.body.length-1].y;
     
@@ -95,7 +94,7 @@ class Snake {
     text("snake", this.body[0].x , this.body[0].y, 12, 12);
     text(this.hunger, this.body[0].x, this.body[0].y - 20, 12, 12);
   	for(let i = 0; i < this.body.length; i++) {
-      rect(this.body[i].x, this.body[i].y, 1, 1);
+      rect(this.body[i].x, this.body[i].y, 10, 10);
     }
   }
 

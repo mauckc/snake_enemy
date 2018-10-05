@@ -3,8 +3,8 @@ class Enemy {
   constructor() {
     this.x = floor(random(w));
     this.y = floor(random(h));
-    this.speed = floor(random(3));
-    this.color = floor(random(25,98));
+    this.speed = floor(random(1 ,10));
+    this.color = color(186, 14, 14);
     this.direction = 0;
     this.chaseTimer = 0;
   }
@@ -59,7 +59,7 @@ class Enemy {
     // Enemy text  
     //text("enemy", this.x + 6, this.y + 6, 20, 20);
     // Enemy body rect(x, y, sizex, sizey)
-    rect(this.x, this.y, 2, 2); 
+    rect(this.x, this.y, 20, 20); 
   }
   
   // Move relative to speed
