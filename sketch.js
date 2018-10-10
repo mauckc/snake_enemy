@@ -13,29 +13,39 @@ let derandomizer = 0;
 let unit;
 var count;
 var enemies = [];
-let inputDelay = 0;
+var index = 0;
+let delayInput = false;
+
+
+// A HTML range slider
+var slider;
 
 
 function setup() {
+  // Set up slider with range between 0 and 255 with starting value of 127
+  slider = createSlider(0, 255, 127);
+  
   createCanvas(800, 800);
   w = floor(width / rez);
   h = floor(height / rez);
   unit = floor(width / 2.0);
   frameRate(fps);
+  
+  resetSketch();
+
+}
+
+function resetSketch() {
+  spawntimer = 0;
+  isFoodSpecial = false;
+  derandomizer = 0;
+  enemies = [];
+  index = 0;
+  delayInput = false;
   snake = new Snake();
   spawnFood();
-
-  // Create Array of Enemies
-  noStroke();
-  var wideCount = width / unit;
-  var highCount = height / unit;
-  console.log(wideCount);
-  console.log(highCount);
-  count = wideCount * highCount;
-  // index for each enemy
-  var index = 0;
   for (var mu = 0; mu < 2; mu++) {
-    enemies[index++] = new Enemy();
+    enemies[index++] = new Enemy(index);
   }
 }
 
@@ -57,8 +67,8 @@ function foodLocation() {
 }
 
 function keyPressed() {
-  if (inputDelay == 0) {
-    inputDelay = 1;
+  if (!delayInput) {
+    delayInput = true;
     if (keyCode === LEFT_ARROW && snake.xdir != 10) {
       snake.setDir(-10, 0);
     } else if (keyCode === RIGHT_ARROW && snake.xdir != -10) {
@@ -75,12 +85,13 @@ function keyPressed() {
 
 function draw() {
   scale(rez);
-  background(220);
+  background(slider.value());
   
   // Snake
   if (snake.eat(food)) {
     spawnFood();
-    enemies.push(new Enemy());
+    index++;
+    enemies.push(new Enemy(index));
   }
   snake.update();
   snake.show();
@@ -100,10 +111,8 @@ function draw() {
   fill("#0eba0e");
   }
   rect(food.x, food.y, foodxsize, foodysize);
-  text("food", food.x + 2, food.y, 50, 50);
+  text("food", food.x + 18, food.y+20, 50, 50);
   
   // update the input pause until next frame
-  inputDelay = 0;
+  delayInput = false;
 }
-
-
