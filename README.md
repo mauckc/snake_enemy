@@ -25,23 +25,23 @@ This software is released open-source under the MIT License
 ### Images: 
 
 score_2: 
-![alt text](./images/score_2.png "score_2")
+![](./images/score_2.png "score_2")
 
 
 cluttered_many_enemies: 
-![alt text](./images/cluttered_many_enemies.png "cluttered_many_enemies" =250x )
+![](./images/cluttered_many_enemies.png "cluttered_many_enemies" =250x )
 
 full_1: 
-![alt text](./images/full_1.png =250x )
+![](./images/full_1.png =250x )
 
 slider: 
-![alt text](./images/slider.png =50x)
+![](./images/slider.png =50x)
 
 slider_score_2: 
-![alt text](./images/slider_score_2.png =250x )
+![](./images/slider_score_2.png =250x )
 
 slider_start: 
-![alt text](./images/slider_start.png =250x )
+![](./images/slider_start.png =250x )
 
 ## Code:
 
