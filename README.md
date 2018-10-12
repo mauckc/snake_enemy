@@ -29,19 +29,19 @@ score_2:
 
 
 cluttered_many_enemies: 
-![alt text](./images/cluttered_many_enemies.png "cluttered_many_enemies")
+![alt text](./images/cluttered_many_enemies.png "cluttered_many_enemies" =250x )
 
 full_1: 
-![alt text](./images/full_1.png "full_1")
+![alt text](./images/full_1.png =250x )
 
 slider: 
-![alt text](./images/slider.png =50x "slider")
+![alt text](./images/slider.png =50x)
 
 slider_score_2: 
-![alt text](./images/slider_score_2.png "slider_score_2")
+![alt text](./images/slider_score_2.png =250x )
 
 slider_start: 
-![alt text](./images/slider_start.png =250x "slider_start")
+![alt text](./images/slider_start.png =250x )
 
 ## Code:
 
