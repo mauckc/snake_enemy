@@ -7,6 +7,8 @@ Dean - [ShinkaiSetsuna](https://github.com/shinkaisetsuna/)
 Try it out:
 [Play Snakemies!](https://mauckc.github.com/snakemies/)
 
+<img src="./images/score_2.png" alt="drawing" width="400"/>
+
 Using:[p5.js](https://p5js.org/)
 [source](https://editor.p5js.org/mauckc/sketches/SyjSE8Tqm)
 
@@ -36,10 +38,6 @@ Reset Button and background color slider:
 <img src="./images/slider_start.png" alt="drawing" width="400"/>
 <img src="./images/slider_score_2.png" alt="drawing" width="400"/>
 
-### Images
-
-<img src="./images/score_2.png" alt="drawing" width="400"/>
-<img src="./images/cluttered_many_enemies.png" alt="drawing" width="400"/>
 
 ## Code
 
@@ -168,7 +166,7 @@ show() {
     }
   }
 ```
-
+<img src="./images/cluttered_many_enemies.png" alt="drawing" width="400"/>
 
 ### enemy.js
 ```javascript
