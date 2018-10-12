@@ -10,40 +10,161 @@ Try it out:
 Using:[p5.js](https://p5js.org/)
 [source](https://editor.p5js.org/mauckc/sketches/SyjSE8Tqm)
 
-## Reference:
+## Reference
 [Daniel Schiffman](https://shiffman.net/)
 [Snake Game Redux](https://www.youtube.com/watch?v=OMoVcohRgZA)
 
 Basic Snake implementation in p5.js
 [editor.p5.js](https://editor.p5js.org/codingtrain/sketches/HkDVpSvDm)
 
-## License:
+## License
 This software is released open-source under the MIT License
 
-## Samples
+## Info
 
-### Images: 
+### Controls
+#### Movement
+##### Arrow Keys
+Up, Down, Left, Right
 
-score_2: 
-![](./images/score_2.png "score_2")
+#### Game Control
+Reset Button and background color slider:
+<img src="./images/slider.png" alt="drawing" width="50"/>
+<img src="./images/full_1.png" alt="drawing" width="200"/>
+
+<img src="./images/slider_start.png" alt="drawing" width="200"/>
+<img src="./images/slider_score_2.png" alt="drawing" width="200"/>
+
+### Images
+
+<img src="./images/score_2.png" alt="drawing" width="200"/>
+<img src="./images/cluttered_many_enemies.png" alt="drawing" width="200"/>
 
 
-cluttered_many_enemies: 
-![](./images/cluttered_many_enemies.png "cluttered_many_enemies" =250x )
+## Code
 
-full_1: 
-![](./images/full_1.png =250x )
+### snake.js
 
-slider: 
-![](./images/slider.png =50x)
+#### Constructor
+```javascript
+class Snake {
+  
+  constructor() {
+    this.body = [];
+    this.body[0] = createVector(floor(w/2), floor(h/2));
+    this.xdir = 0;
+    this.ydir = 0;
+    this.len = 0;
+    this.color = color("#0e0eba");
+    this.hunger = 0;
+  }
+```
 
-slider_score_2: 
-![](./images/slider_score_2.png =250x )
+#### C
+```javascript
+setDir(x, y) {
+    this.xdir = x;
+    this.ydir = y;
+  }
+```
+#### Update Function
+Update the snake every frame
+```javascript
+  update() {    
+    let head = this.body[this.body.length-1].copy();
+    this.body.shift();
+    head.x += this.xdir;
+    head.y += this.ydir;
+    this.body.push(head);
+    
+    // Periodic Boundary Conditions
+    if (head.x>=w)
+    {
+      head.x-=w
+    }
+    if (head.y>=h)
+    {
+      head.y-=h
+    }
+     if (head.x<=-2)
+    {
+      head.x+=w
+    }
+    if (head.y<=-2) 
+    {
+      head.y+=h
+    }
+  }
+```
+#### Grow Function
+pushes a copy of the current snake head to be added back onto the snake body array
 
-slider_start: 
-![](./images/slider_start.png =250x )
+```javascript
+grow() {
+    let head = this.body[this.body.length-1].copy();
+    this.len++;
+    this.body.push(head);
+  }
+  
+```
 
-## Code:
+#### Game Over Function
+returns true if snake is in bounds of any enemy
+
+```javascript
+
+endGame(enem) {
+    let x = this.body[this.body.length-1].x;
+    let y = this.body[this.body.length-1].y;
+
+    let enemyxpos = enem.x;
+    let enemyypos = enem.y;
+
+    if ( (enemyxpos - 10 < x && x < enemyxpos + 20) && (enemyypos - 10 < y && y < enemyypos+20) ) {
+       return true;
+    }
+    for(let i = 0; i < this.body.length-1; i++) {
+    	let part = this.body[i];
+      if(part.x == x && part.y == y) {
+      	return true;
+      }
+    }
+    return false;
+  }
+```
+
+```javascript
+eat(pos) {
+    let x = this.body[this.body.length-1].x;
+    let y = this.body[this.body.length-1].y;
+    
+    if((pos.x <= x && x < pos.x + foodxsize) && (pos.y <= y && y < pos.y + foodysize)) {
+      this.grow();
+      this.hunger = 0;
+      return true;
+    }
+    // Snake gets hungrier everytime it tries to eat and fails
+    this.hunger++;
+    return false;
+  }
+  
+  
+```
+
+```javascript
+show() {
+    noStroke();
+    fill(this.color);
+    // Make text shake with merlin noise with amplitude directly related
+    //  to the snake's hunger
+    text("snake", this.body[0].x  + 18, this.body[0].y + 20, 50, 50);
+    text(this.hunger, this.body[0].x + 18, this.body[0].y - 20, 50, 50);
+  	for(let i = 0; i < this.body.length; i++) {
+      rect(this.body[i].x, this.body[i].y, 10, 10);
+    }
+  }
+```
+
 
 ### enemy.js
 ```javascript
@@ -275,118 +396,3 @@ class Enemy {
 }
 ```
 
-
-
-
-### snake.js
-
-```javascript
-class Snake {
-  
-  constructor() {
-  	this.body = [];
-    this.body[0] = createVector(floor(w/2), floor(h/2));
-    this.xdir = 0;
-    this.ydir = 0;
-    this.len = 0;
-    this.color = color("#0e0eba");
-    this.hunger = 0;
-  }
-```
-
-```javascript
-setDir(x, y) {
-  	this.xdir = x;
-    this.ydir = y;
-  }
-```
-```javascript
-  update() {    
-  	let head = this.body[this.body.length-1].copy();
-    this.body.shift();
-    head.x += this.xdir;
-    head.y += this.ydir;
-    this.body.push(head);
-    
-    // Periodic Boundary Conditions
-    if (head.x>=w)
-    {
-      head.x-=w
-    }
-    if (head.y>=h)
-    {
-      head.y-=h
-    }
-     if (head.x<=-2)
-    {
-      head.x+=w
-    }
-    if (head.y<=-2) 
-    {
-      head.y+=h
-    }
-  }
-```
-
-```javascript
-grow() {
-  	let head = this.body[this.body.length-1].copy();
-    this.len++;
-    this.body.push(head);
-  }
-  
-```
-
-```javascript
-
-endGame(enem) {
-  	let x = this.body[this.body.length-1].x;
-    let y = this.body[this.body.length-1].y;
-
-    let enemyxpos = enem.x;
-    let enemyypos = enem.y;
-
-    if ( (enemyxpos - 10 < x && x < enemyxpos + 20) && (enemyypos - 10 < y && y < enemyypos+20) ) {
-       return true;
-    }
-    for(let i = 0; i < this.body.length-1; i++) {
-    	let part = this.body[i];
-      if(part.x == x && part.y == y) {
-      	return true;
-      }
-    }
-    return false;
-  }
-```
-
-```javascript
-eat(pos) {
-  	let x = this.body[this.body.length-1].x;
-    let y = this.body[this.body.length-1].y;
-    
-    if((pos.x <= x && x < pos.x + foodxsize) && (pos.y <= y && y < pos.y + foodysize)) {
-      this.grow();
-      this.hunger = 0;
-      return true;
-    }
-    // Snake gets hungrier everytime it tries to eat and fails
-    this.hunger++;
-    return false;
-  }
-  
-  
-```
-
-```javascript
-show() {
-    noStroke();
-    fill(this.color);
-    // Make text shake with merlin noise with amplitude directly related
-    //  to the snake's hunger
-    text("snake", this.body[0].x  + 18, this.body[0].y + 20, 50, 50);
-    text(this.hunger, this.body[0].x + 18, this.body[0].y - 20, 50, 50);
-  	for(let i = 0; i < this.body.length; i++) {
-      rect(this.body[i].x, this.body[i].y, 10, 10);
-    }
-  }
-```
