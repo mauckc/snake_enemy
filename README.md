@@ -29,16 +29,17 @@ Up, Down, Left, Right
 
 #### Game Control
 Reset Button and background color slider:
-<img src="./images/slider.png" alt="drawing" width="50"/>
-<img src="./images/full_1.png" alt="drawing" width="200"/>
 
-<img src="./images/slider_start.png" alt="drawing" width="200"/>
-<img src="./images/slider_score_2.png" alt="drawing" width="200"/>
+<img src="./images/slider.png" alt="drawing" width="100"/>
+<img src="./images/full_1.png" alt="drawing" width="400"/>
+
+<img src="./images/slider_start.png" alt="drawing" width="400"/>
+<img src="./images/slider_score_2.png" alt="drawing" width="400"/>
 
 ### Images
 
-<img src="./images/score_2.png" alt="drawing" width="200"/>
-<img src="./images/cluttered_many_enemies.png" alt="drawing" width="200"/>
+<img src="./images/score_2.png" alt="drawing" width="400"/>
+<img src="./images/cluttered_many_enemies.png" alt="drawing" width="400"/>
 
 
 ## Code
