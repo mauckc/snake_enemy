@@ -41,12 +41,13 @@ Reset Button and background color slider:
 <img src="./images/score_2.png" alt="drawing" width="400"/>
 <img src="./images/cluttered_many_enemies.png" alt="drawing" width="400"/>
 
-
 ## Code
 
 ### snake.js
 
 #### Constructor
+Hunger not currently used but output above snake
+
 ```javascript
 class Snake {
   
@@ -61,7 +62,9 @@ class Snake {
   }
 ```
 
-#### C
+#### Set the Snake Direction Function
+Takes in vector of updated x and y direction
+
 ```javascript
 setDir(x, y) {
     this.xdir = x;
