@@ -47,20 +47,14 @@ class Snake {
     this.body.push(head);
   }
   
-  endGame() {
+endGame(enem) {
   	let x = this.body[this.body.length-1].x;
     let y = this.body[this.body.length-1].y;
-    // Remove Boundaries
-    // if(x > w-1 || x < 0 || y > h-1 || y < 0) {
-    //    return true;
-    // }
-    let enemyxpos = enemy.body[enemy.body.length-1].x;
-    let enemyypos = enemy.body[enemy.body.length-1].y;
-    // if ( (x == enemyxpos ) && (y == enemyypos ) ) {
-    //    return true;
-    // }
-    // 2 by 2 enemy danger area
-    if ( (x == enemyxpos || x == enemyxpos + 1) && (y == enemyypos || y == enemyypos+1) ) {
+
+    let enemyxpos = enem.x;
+    let enemyypos = enem.y;
+
+    if ( (enemyxpos - 10 < x && x < enemyxpos + 20) && (enemyypos - 10 < y && y < enemyypos+20) ) {
        return true;
     }
     for(let i = 0; i < this.body.length-1; i++) {
@@ -91,8 +85,8 @@ class Snake {
     fill(this.color);
     // Make text shake with merlin noise with amplitude directly related
     //  to the snake's hunger
-    text("snake", this.body[0].x , this.body[0].y, 12, 12);
-    text(this.hunger, this.body[0].x, this.body[0].y - 20, 12, 12);
+    text("snake", this.body[0].x  + 18, this.body[0].y + 20, 50, 50);
+    text(this.hunger, this.body[0].x + 18, this.body[0].y - 20, 50, 50);
   	for(let i = 0; i < this.body.length; i++) {
       rect(this.body[i].x, this.body[i].y, 10, 10);
     }
