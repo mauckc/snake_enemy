@@ -1,22 +1,4 @@
-// TO DO: 20181010
 
-// TO DO: 20181009
-
-// Debug task: Why are the enemies outputing 'unnamed' below 'enemy' in text?
-// 		What should that be?
-//
-
-// Use 180 degree rotation matrix to choose where to spawn new enemies when the snake eats
-//  this may requre adding parameters tto the enemy class
-
-// Loading Menu Screen
-// Implement Game Over etc
-//score file
-//grabbing nums from various game entities
-//output score etc to top left 
-//output # of enemies on top right
-
-// Hi Scores?
 //colors
 let red = "#990000";
 let ocean = "#009999"
@@ -45,6 +27,7 @@ let end = false;
 var survival = 0;
 // an HTML range slider
 var slider;
+var sliderDifficulty;
 
 function setup() {
   createCanvas(800, 800);
@@ -65,6 +48,7 @@ function resetSketch() {
   frameRate(fps);
   snake = new Snake();
   spawnFood();
+  index = 0;
 
   // Create Array of Enemies
   noStroke();
@@ -113,6 +97,7 @@ function keyPressed() {
 }
 
 function draw() {
+  textSize(20);
   if (end){
     background(slider.value());
     textAlign(floor(width/2));
@@ -120,12 +105,17 @@ function draw() {
     text("Game Over",10,400);
     textSize(100)
     if (index-2 == 0){
-    fill(red);
-    text("Final Score: "+0,10,550);
-}
+      fill(red);
+      //textAlign(CENTER);
+      text("Final Score: "+0,10,550);
+    }
     else{
-    fill(red);
-    text("Final Score: "+(index-2),10,550);
+      fill(red);
+      text("Final Score: "+(index-2),10,550);
+    }
+    if (key == '') {
+      end = false;
+      resetSketch();
     }
   }
   
@@ -159,7 +149,7 @@ function draw() {
     if(isFoodSpecial){
       fill(cyan);
     } else {
-    fill("#0eba0e");
+      fill("#0eba0e");
     }
     rect(food.x, food.y, foodxsize, foodysize);
     text("food", food.x + 18, food.y + 20, 50, 50);
@@ -167,15 +157,15 @@ function draw() {
     // update the input pause until next frame
     inputDelay = 0;
     
+    textSize(40);
     //20181011 daniel 
     //score thing in top left  
     if (index-2 == 0){
     
-    text("Score: "+0,740,20);
+    text("Score: "+0,width-155,40);
 }
     else{
-    text("Score: "+(index-2),740,20)
+      text("Score: "+(index-2), width-155,40)
     }
   }
 }
-
