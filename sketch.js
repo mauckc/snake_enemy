@@ -1,3 +1,22 @@
+// TO DO: 20181010
+
+// TO DO: 20181009
+
+// Debug task: Why are the enemies outputing 'unnamed' below 'enemy' in text?
+// 		What should that be?
+//
+
+// Use 180 degree rotation matrix to choose where to spawn new enemies when the snake eats
+//  this may requre adding parameters tto the enemy class
+
+// Loading Menu Screen
+// Implement Game Over etc
+//score file
+//grabbing nums from various game entities
+//output score etc to top left 
+//output # of enemies on top right
+
+// Hi Scores?
 //colors
 let red = "#990000";
 let ocean = "#009999"
@@ -30,12 +49,13 @@ var sliderDifficulty;
 
 var startingEnemyCount = 2;
 var canvas;
+var button;
 
 function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
   //createCanvas(width, height);
   resetSketch();
-  var button = createButton('reset');
+  button = createButton('reset');
   button.mousePressed(resetSketch);
   // Set up slider with range between 0 and 255 with starting value of 127
   slider = createSlider(0, 255, 200);
@@ -54,7 +74,7 @@ function resetSketch() {
   snake = new Snake();
   spawnFood();
   index = 0;
-
+  // button.position(25, height - 25);
   // Create Array of Enemies
   noStroke();
   // var wideCount = width / unit;
@@ -105,6 +125,9 @@ function keyPressed() {
 function draw() {
   textSize(20);
   if (end){
+    button.show();
+    button.size(width/10, height/20);
+    button.position(width/2,height/2);
     background(slider.value());
     textAlign(floor(width/2));
     textSize(150);
@@ -122,6 +145,9 @@ function draw() {
     if (key == ' ') {
       end = false;
       resetSketch();
+      // reset button position
+      button.position(25, height - 25);
+      button.hide();
     }
   }
   
@@ -208,4 +234,6 @@ function mousePressed()
     snake.setDir(-10, 0) // LEFT
     }
   }
+  button.position(25, height - 25);
+  button.hide();
 }
