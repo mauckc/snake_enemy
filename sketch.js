@@ -1,22 +1,3 @@
-// TO DO: 20181010
-
-// TO DO: 20181009
-
-// Debug task: Why are the enemies outputing 'unnamed' below 'enemy' in text?
-// 		What should that be?
-//
-
-// Use 180 degree rotation matrix to choose where to spawn new enemies when the snake eats
-//  this may requre adding parameters tto the enemy class
-
-// Loading Menu Screen
-// Implement Game Over etc
-//score file
-//grabbing nums from various game entities
-//output score etc to top left 
-//output # of enemies on top right
-
-// Hi Scores?
 //colors
 let red = "#990000";
 let ocean = "#009999"
@@ -47,6 +28,7 @@ var survival = 0;
 var slider;
 var sliderDifficulty;
 
+var startingEnemyCount = 2;
 var canvas;
 
 function setup() {
@@ -57,6 +39,8 @@ function setup() {
   button.mousePressed(resetSketch);
   // Set up slider with range between 0 and 255 with starting value of 127
   slider = createSlider(0, 255, 200);
+  slider.position(25, 25);
+  button.position(25, height - 25);
   setInterval(function(){survival++;}, 1000);
 }
 
@@ -78,7 +62,7 @@ function resetSketch() {
   // count = wideCount * highCount;
   // index for each enemy
   
-  for (var mu = 0; mu < 2; mu++) {
+  for (var mu = 0; mu < startingEnemyCount; mu++) {
     enemies[index++] = new Enemy(index);
   }
 }
@@ -111,9 +95,10 @@ function keyPressed() {
       snake.setDir(0, 10);
     } else if (keyCode === UP_ARROW && snake.ydir != 10) {
       snake.setDir(0, -10);
-    } else if (key == ' ') {
+    //} else if (key == ' ') {
       //resetSketch();
     }
+    
   }
 }
 
@@ -199,3 +184,28 @@ window.onresize = function() {
   height = h;
 };
 
+
+// Added Mouse Functionality
+function mousePressed()
+{
+  // Check if in upper right HALF of screen
+  if (mouseY - (height/2) > -(mouseX - (width/2))){
+    // Check if in the top triangle
+    if (mouseY - (height/2) > (mouseX - (width/2))){
+    snake.setDir(0,10) // DOWN
+    // Else must be in the right triangle
+    }else
+    {
+    snake.setDir(10, 0) // RIGHT
+    }
+  }else
+  { // Else it must be in the bottom left HALF of screen
+    if (mouseY - (height/2) < (mouseX - (width/2)))
+    {
+    snake.setDir(0,-10) // UP
+    }else
+    {
+    snake.setDir(-10, 0) // LEFT
+    }
+  }
+}
