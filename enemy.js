@@ -128,7 +128,7 @@ class Enemy {
           else {
             //tried moving to the down, but ooB. left is preferred.
             if (this.x - this.forbiddenRange > 0) {
-              //moving up
+              //moving left
 							this.x -= this.forbiddenRange;
             }
             else {
