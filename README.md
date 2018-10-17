@@ -1,7 +1,10 @@
 # snake_enemy
 Daniel, Dean and Ross Snake Variant with Enemies and periodic boundaries
 
+Contributors:
+
 Daniel - [danielst0ne](https://github.com/danielst0ne/)
+
 Dean - [ShinkaiSetsuna](https://github.com/shinkaisetsuna/)
 
 Try it out:

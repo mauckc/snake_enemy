@@ -22,8 +22,8 @@ let red = "#990000";
 let ocean = "#009999"
 let cyan = "#0ebaba";
 let lime = "#0eba0e";
-
 //end colors
+let score;
 let snake;
 let rez = 1;
 let food;
@@ -35,7 +35,8 @@ let foodxsize = 20;
 let foodysize = 20;
 let isFoodSpecial = false;
 let derandomizer = 0;
-
+let width = 800;
+let height = 800;
 let unit;
 var count;
 var enemies = [];
@@ -45,14 +46,24 @@ let end = false;
 var survival = 0;
 // an HTML range slider
 var slider;
+var sliderDifficulty;
+
+var startingEnemyCount = 2;
+var canvas;
+var button;
 
 function setup() {
-  createCanvas(800, 800);
+  canvas = createCanvas(window.innerWidth, window.innerHeight);
+  //createCanvas(width, height);
+	score = new Score(snake);
   resetSketch();
-  var button = createButton('reset');
+  button = createButton('reset');
   button.mousePressed(resetSketch);
   // Set up slider with range between 0 and 255 with starting value of 127
-  slider = createSlider(0, 255, 127);
+  slider = createSlider(0, 255, 200);
+  slider.position(25, 25);
+  button.position(25, height - 25);
+  button.size(width/10, height/20);
   setInterval(function(){survival++;}, 1000);
 }
 
@@ -64,8 +75,10 @@ function resetSketch() {
   unit = floor(width / 2.0);
   frameRate(fps);
   snake = new Snake();
+  
   spawnFood();
-
+  index = 0;
+  // button.position(25, height - 25);
   // Create Array of Enemies
   noStroke();
   // var wideCount = width / unit;
@@ -73,9 +86,12 @@ function resetSketch() {
   // count = wideCount * highCount;
   // index for each enemy
   
-  for (var mu = 0; mu < 2; mu++) {
+  for (var mu = 0; mu < startingEnemyCount; mu++) {
     enemies[index++] = new Enemy(index);
   }
+  
+  score.difficulty = 400;
+
 }
 
 function spawnFood() {
@@ -106,26 +122,34 @@ function keyPressed() {
       snake.setDir(0, 10);
     } else if (keyCode === UP_ARROW && snake.ydir != 10) {
       snake.setDir(0, -10);
-    } else if (key == ' ') {
-      resetSketch();
+    //} else if (key == ' ') {
+      //resetSketch();
     }
+    
   }
 }
 
 function draw() {
+  textSize(20);
   if (end){
+    button.show();
+    button.size(width / 10, height / 20);
+    button.position(width / 2, height / 2);
     background(slider.value());
-    textAlign(floor(width/2));
+    textAlign(floor(width / 2));
     textSize(150);
-    text("Game Over",10,400);
+    text("Game Over", 10, 400);
     textSize(100)
-    if (index-2 == 0){
     fill(red);
-    text("Final Score: "+0,10,550);
-}
-    else{
-    fill(red);
-    text("Final Score: "+(index-2),10,550);
+    text("Score: " + score.score, 10, 550);
+    
+    
+    if (key == ' ') {
+      end = false;
+      resetSketch();
+      // reset button position
+      button.position(25, height - 25);
+      button.hide();
     }
   }
   
@@ -166,16 +190,51 @@ function draw() {
 
     // update the input pause until next frame
     inputDelay = 0;
-    
+    fill(0);
+    textSize(40);
     //20181011 daniel 
     //score thing in top left  
-    if (index-2 == 0){
-    
-    text("Score: "+0,740,20);
-}
-    else{
-    text("Score: "+(index-2),740,20)
-    }
+    score.update();
+    score.out();
   }
+  
 }
 
+window.onresize = function() {
+  var w = window.innerWidth;
+  var h = window.innerHeight;  
+  canvas.size(w,h);
+  width = w;
+  height = h;
+};
+
+
+// Added Mouse Functionality
+function mousePressed()
+{
+  if (inputDelay == 0) {
+    inputDelay = 1;
+    // Check if in upper right HALF of screen
+    if (mouseY - (height / 2) > -(mouseX - (width / 2))){
+      // Check if in the top triangle
+      if (mouseY - (height / 2) > (mouseX - (width / 2)) && (snake.ydir != -10)){
+      snake.setDir(0,10) // DOWN
+      // Else must be in the right triangle
+      } else if(snake.xdir != -10)
+      {
+      snake.setDir(10, 0) // RIGHT
+      }
+    } else
+    { // Else it must be in the bottom left HALF of screen
+      if (mouseY - (height / 2) < (mouseX - (width / 2)) && (snake.ydir != 10))
+      {
+      snake.setDir(0,-10) // UP
+      } else if(snake.xdir != 10)
+      {
+      snake.setDir(-10, 0) // LEFT
+      }
+    }
+  }
+  button.position(25, height - 25);
+  button.mousePressed(button.hide());
+}
