@@ -33,7 +33,7 @@ let spawntimer = 0;
 let fps = 30;
 let foodxsize = 20;
 let foodysize = 20;
-let isFoodSpecial = false;
+let isFoodSpecial = 0;
 let derandomizer = 0;
 let width = 800;
 let height = 800;
@@ -96,19 +96,19 @@ function resetSketch() {
 
 function spawnFood() {
   if(random(derandomizer, 20) > 17){
-    isFoodSpecial = true;
+    isFoodSpecial = 1;
     derandomizer = 0;
   } else{
-    isFoodSpecial = false;
+    isFoodSpecial = 0;
     derandomizer++;
   }
-	foodLocation();
+	foodLocation(isFoodSpecial);
 }
 
-function foodLocation() {
+function foodLocation(isFoodSpecial) {
   let x = (10/rez)*floor(random(1, w/(10/rez)));
   let y = (10/rez)*floor(random(1, h/(10/rez)));
-  food = createVector(x, y);
+  food = createVector(x, y, isFoodSpecial);
 }
 
 function keyPressed() {
