@@ -74,9 +74,9 @@ class Snake {
     	let part = this.body[i];
       if((enemyxpos - 10 < part.x && part.x < enemyxpos + 20) && (enemyypos - 10 < part.y && part.y < enemyypos + 20)) {
         //if super mode is on, then head (and only head) of snake will be able to kill enemy.
-        if(this.superTimer > 0 && i == this.bodyLength - 1) {
+        if(this.superTimer > 0 && i == this.body.length - 1) {
           //send message to KILL enemy.
-          
+          	delete enemies[enem.index - 1];
           return false;
         }
         else return true;
