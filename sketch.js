@@ -204,8 +204,8 @@ function draw() {
 
 window.onresize = function() {
   if(window.innerWidth > window.innerHeight)
-  { canvas = createCanvas(window.innerHeight - 10, window.innerHeight - 10); } 
-  else { canvas = createCanvas(window.innerWidth - 10, window.innerWidth - 10); }
+  { canvas.size(window.innerHeight - 10, window.innerHeight - 10); } 
+  else { canvas.size(window.innerWidth - 10, window.innerWidth - 10); }
   width = window.innerWidth - 10;
   height = window.innerHeight - 10;
 };
