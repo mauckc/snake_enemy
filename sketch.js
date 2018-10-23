@@ -53,7 +53,9 @@ var canvas;
 var button;
 
 function setup() {
-  canvas = createCanvas(window.innerWidth, window.innerHeight);
+  if(window.innerWidth > window.innerHeight)
+  { canvas = createCanvas(window.innerHeight - 10, window.innerHeight - 10); } 
+  else { canvas = createCanvas(window.innerWidth - 10, window.innerWidth - 10); }
   //createCanvas(width, height);
 	score = new Score(snake);
   resetSketch();
@@ -201,11 +203,11 @@ function draw() {
 }
 
 window.onresize = function() {
-  var w = window.innerWidth;
-  var h = window.innerHeight;  
-  canvas.size(w,h);
-  width = w;
-  height = h;
+  if(window.innerWidth > window.innerHeight)
+  { canvas = createCanvas(window.innerHeight - 10, window.innerHeight - 10); } 
+  else { canvas = createCanvas(window.innerWidth - 10, window.innerWidth - 10); }
+  width = window.innerWidth - 10;
+  height = window.innerHeight - 10;
 };
 
 
